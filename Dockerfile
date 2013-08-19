@@ -33,8 +33,7 @@ RUN echo ANT_OPTS=$ANT_OPTS >> /etc/environment
 #
 # Get just the Postgres client and FTP client
 #
-RUN apt-get install -y postgresql-client
-RUN apt-get install -y ftp
+RUN apt-get install -y postgresql-client ftp
 
 #
 # The home directory for all user accounts
@@ -64,22 +63,3 @@ RUN chown -R $CSPACE_USERNAME $HOME/$CSPACE_USERNAME
 #
 RUN apt-get install -y imagemagick
 
-#
-# Setup the Apache Tomcat environment
-#
-ENV CATALINA_HOME_PARENT /usr/local/share
-RUN echo CATALINA_HOME_PARENT=$CATALINA_HOME_PARENT >> /etc/environment
-
-ENV CATALINA_PID $CATALINA_HOME/bin/tomcat.pid
-RUN echo CATALINA_PID=$CATALINA_PID >> /etc/environment
-
-ENV CATALINA_OPTS -Xmx1024m -XX:MaxPermSize=384m
-RUN echo CATALINA_OPTS=$CATALINA_OPTS >> /etc/environment
-
-ENV CSPACE_JEESERVER_HOME $CATALINA_HOME
-RUN echo CSPACE_JEESERVER_HOME=$CSPACE_JEESERVER_HOME >> /etc/environment
-
-#
-# Finally export port 8080 to our host
-#
-EXPOSE :8080
