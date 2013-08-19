@@ -21,14 +21,15 @@ RUN java -version
 RUN javac -version
 RUN apt-get install oracle-java7-set-default
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
-RUN export JAVA_HOME=$JAVA_HOME
 RUN echo JAVA_HOME=$JAVA_HOME >> /etc/environment
 
 #
 # Install Maven
 #
 RUN apt-get install -y maven
-ENV MAVEN_OPTS-Xmx768m -XX:MaxPermSize=512m
+ENV MAVEN_OPTS -Xmx768m -XX:MaxPermSize=512m
+RUN echo MAVEN_OPTS=$MAVEN_OPTS >> /etc/environment
+
 
 #
 # Install wget
@@ -40,6 +41,7 @@ RUN apt-get install -y wget
 #
 RUN apt-get install -y ant
 ENV ANT_OPTS -Xmx768m -XX:MaxPermSize=512m
+RUN echo ANT_OPTS=$ANT_OPTS >> /etc/environment
 
 #
 # Get just the Postgres client and FTP client
@@ -57,7 +59,7 @@ ENV HOME /home
 #
 ENV CSPACE_USERNAME cspace
 ENV CSPACE_USER_PASSWORD cspace
-RUN useradd $CSPACE_USERNAME -m
+RUN useradd $CSPACE_USERNAME -m -s /bin/bash
 RUN echo $CSPACE_USER_PASSWORD$'\n'$CSPACE_USER_PASSWORD$'\n' | passwd $CSPACE_USERNAME
 
 #
@@ -68,6 +70,7 @@ RUN cd $HOME/$CSPACE_USERNAME && mkdir src
 RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/services.git
 RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/application.git
 RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/ui.git
+RUN chown -R $CSPACE_USERNAME $HOME/$CSPACE_USERNAME
 
 #
 # Install Nuxeo dependencies
@@ -78,9 +81,16 @@ RUN apt-get install -y imagemagick
 # Setup the Apache Tomcat environment
 #
 ENV CATALINA_HOME_PARENT /usr/local/share
+RUN echo CATALINA_HOME_PARENT=$CATALINA_HOME_PARENT >> /etc/environment
+
 ENV CATALINA_PID $CATALINA_HOME/bin/tomcat.pid
+RUN echo CATALINA_PID=$CATALINA_PID >> /etc/environment
+
 ENV CATALINA_OPTS -Xmx1024m -XX:MaxPermSize=384m
+RUN echo CATALINA_OPTS=$CATALINA_OPTS >> /etc/environment
+
 ENV CSPACE_JEESERVER_HOME $CATALINA_HOME
+RUN echo CSPACE_JEESERVER_HOME=$CSPACE_JEESERVER_HOME >> /etc/environment
 
 #
 # Finally export port 8080 to our host
