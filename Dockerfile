@@ -7,7 +7,7 @@ MAINTAINER Richard Millet "richard.millet@berkeley.edu"
 #
 # Install common software packages
 #
-RUN apt-get install -y software-properties-common
+RUN apt-get install -y software-properties-common wget
 
 #
 # Install the Installing the Oracle/Sun JDK 7
@@ -17,29 +17,16 @@ RUN apt-get -y update
 RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
 RUN apt-get -y install oracle-jdk7-installer
 RUN update-alternatives --display java
-RUN java -version
-RUN javac -version
 RUN apt-get install oracle-java7-set-default
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 RUN echo JAVA_HOME=$JAVA_HOME >> /etc/environment
 
 #
-# Install Maven
+# Install Maven and Ant
 #
-RUN apt-get install -y maven
+RUN apt-get install -y maven ant
 ENV MAVEN_OPTS -Xmx768m -XX:MaxPermSize=512m
 RUN echo MAVEN_OPTS=$MAVEN_OPTS >> /etc/environment
-
-
-#
-# Install wget
-#
-RUN apt-get install -y wget
-
-#
-# Install Ant
-#
-RUN apt-get install -y ant
 ENV ANT_OPTS -Xmx768m -XX:MaxPermSize=512m
 RUN echo ANT_OPTS=$ANT_OPTS >> /etc/environment
 
