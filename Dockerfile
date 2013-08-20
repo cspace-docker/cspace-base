@@ -10,30 +10,25 @@ MAINTAINER Richard Millet "richard.millet@berkeley.edu"
 RUN apt-get install -y software-properties-common wget
 
 #
-# Install the Installing the Oracle/Sun JDK 7
+# Install the Oracle JDK and a set of other tools we'll need.
 #
-RUN add-apt-repository -y ppa:webupd8team/java
-RUN apt-get -y update
-RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
-RUN apt-get -y install oracle-jdk7-installer
-RUN update-alternatives --display java
-RUN apt-get install oracle-java7-set-default
+ADD install-tool-dependencies.sh install-tool-dependencies.sh
+RUN chmod ug+x install-tool-dependencies.sh
+RUN ./install-tool-dependencies.sh
+
+#
+# Add a bash script that we'll use to set environment variables in the /etc/environment system file.
+#
+ADD add-env-vars.sh add-env-vars.sh
+RUN chmod ug+x add-env-vars.sh
+
+#
+# Setup the Tools' environment variables.
+#
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
-RUN echo JAVA_HOME=$JAVA_HOME >> /etc/environment
-
-#
-# Install Maven and Ant
-#
-RUN apt-get install -y maven ant
 ENV MAVEN_OPTS -Xmx768m -XX:MaxPermSize=512m
-RUN echo MAVEN_OPTS=$MAVEN_OPTS >> /etc/environment
 ENV ANT_OPTS -Xmx768m -XX:MaxPermSize=512m
-RUN echo ANT_OPTS=$ANT_OPTS >> /etc/environment
-
-#
-# Get just the Postgres client and FTP client
-#
-RUN apt-get install -y postgresql-client ftp
+RUN ./add-env-vars.sh $JAVA_HOME $MAVEN_OPTS $ANT_OPTS
 
 #
 # The home directory for all user accounts

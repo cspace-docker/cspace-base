@@ -1,3 +1,3 @@
 for arg; do
-   echo "$arg"
+   echo "$arg"="$arg" >> /etc/environment
 done
