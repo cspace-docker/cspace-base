@@ -1,3 +1,4 @@
 for arg; do
-   echo "$arg"="$arg" >> /etc/environment
+	echo ${!arg*}=$arg
+#   echo "$arg"="$arg" >> /etc/environment
 done
