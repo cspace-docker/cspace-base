@@ -51,7 +51,7 @@ ENV CSPACE_USER_PASSWORD cspace
 #
 ADD git-cspace-src.sh git-cspace-src.sh
 RUN chmod ug+x git-cspace-src.sh
-RUN git-cspace-src.sh
+RUN ./git-cspace-src.sh
 
 #RUN apt-get install -y git
 #RUN cd $HOME/$CSPACE_USERNAME && mkdir src
