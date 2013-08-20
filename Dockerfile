@@ -23,7 +23,7 @@ RUN chmod ug+x add-env-vars.sh
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 ENV MAVEN_OPTS -Xmx768m -XX:MaxPermSize=512m
 ENV ANT_OPTS -Xmx768m -XX:MaxPermSize=512m
-RUN ./add-env-vars.sh $JAVA_HOME $MAVEN_OPTS $ANT_OPTS
+RUN ./add-env-vars.sh JAVA_HOME MAVEN_OPTS ANT_OPTS
 
 #
 # The home directory for all user accounts
