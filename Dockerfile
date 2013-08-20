@@ -45,21 +45,23 @@ ENV HOME /home
 #
 ENV CSPACE_USERNAME cspace
 ENV CSPACE_USER_PASSWORD cspace
-RUN useradd $CSPACE_USERNAME -m -s /bin/bash
-RUN echo $CSPACE_USER_PASSWORD$'\n'$CSPACE_USER_PASSWORD$'\n' | passwd $CSPACE_USERNAME
 
 #
 # Create a directory for the CollectionSpace Sources and download them
 #
-RUN apt-get install -y git
-RUN cd $HOME/$CSPACE_USERNAME && mkdir src
-RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/services.git
-RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/application.git
-RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/ui.git
-RUN chown -R $CSPACE_USERNAME $HOME/$CSPACE_USERNAME
+ADD git-cspace-src.sh git-cspace-src.sh
+RUN chmod ug+x git-cspace-src.sh
+RUN git-cspace-src.sh
+
+#RUN apt-get install -y git
+#RUN cd $HOME/$CSPACE_USERNAME && mkdir src
+#RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/services.git
+#RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/application.git
+#RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/ui.git
+#RUN chown -R $CSPACE_USERNAME $HOME/$CSPACE_USERNAME
 
 #
 # Install Nuxeo dependencies
 #
-RUN apt-get install -y imagemagick
+#RUN apt-get install -y imagemagick
 
