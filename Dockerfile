@@ -18,23 +18,20 @@ ADD add-env-vars.sh add-env-vars.sh
 RUN chmod ug+x add-env-vars.sh
 
 #
+# Create a Linux user account named 'cspace'
+#
+ENV USER_HOME /home
+ENV CSPACE_USERNAME cspace
+ENV CSPACE_USER_PASSWORD cspace
+
+#
 # Setup the Tools' environment variables.
 #
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 ENV MAVEN_OPTS -Xmx768m -XX:MaxPermSize=512m
 ENV ANT_OPTS -Xmx768m -XX:MaxPermSize=512m
-RUN ./add-env-vars.sh JAVA_HOME MAVEN_OPTS ANT_OPTS
+RUN ./add-env-vars.sh USER_HOME CSPACE_USERNAME JAVA_HOME MAVEN_OPTS ANT_OPTS
 
-#
-# The home directory for all user accounts
-#
-ENV HOME /home
-
-#
-# Create a Linux user account named 'cspace'
-#
-ENV CSPACE_USERNAME cspace
-ENV CSPACE_USER_PASSWORD cspace
 
 #
 # Create a directory for the CollectionSpace Sources and download them
