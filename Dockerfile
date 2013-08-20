@@ -53,13 +53,6 @@ ADD git-cspace-src.sh git-cspace-src.sh
 RUN chmod ug+x git-cspace-src.sh
 RUN ./git-cspace-src.sh
 
-#RUN apt-get install -y git
-#RUN cd $HOME/$CSPACE_USERNAME && mkdir src
-#RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/services.git
-#RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/application.git
-#RUN cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/ui.git
-#RUN chown -R $CSPACE_USERNAME $HOME/$CSPACE_USERNAME
-
 #
 # Install Nuxeo dependencies
 #

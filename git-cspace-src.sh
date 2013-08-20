@@ -14,6 +14,4 @@ cd $HOME/$CSPACE_USERNAME && mkdir src
 cd $HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/ui.git
 chown -R $CSPACE_USERNAME $HOME/$CSPACE_USERNAME
 
-quit
-END_SCRIPT
 exit 0
