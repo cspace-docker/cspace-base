@@ -5,11 +5,6 @@ FROM base
 MAINTAINER Richard Millet "richard.millet@berkeley.edu"
 
 #
-# Install common software packages
-#
-RUN apt-get install -y software-properties-common wget
-
-#
 # Install the Oracle JDK and a set of other tools we'll need.
 #
 ADD install-tool-dependencies.sh install-tool-dependencies.sh
@@ -47,9 +42,4 @@ ENV CSPACE_USER_PASSWORD cspace
 ADD git-cspace-src.sh git-cspace-src.sh
 RUN chmod ug+x git-cspace-src.sh
 RUN ./git-cspace-src.sh
-
-#
-# Install Nuxeo dependencies
-#
-#RUN apt-get install -y imagemagick
 
