@@ -1,4 +1,7 @@
+#!/bin/bash
+
 for arg; do
-	echo ${!arg*}=$arg
-#   echo "$arg"="$arg" >> /etc/environment
+	echo $arg=${!arg}
 done
+
+exit 0
