@@ -1,7 +1,7 @@
 #
 # Notes: "DEBIAN_FRONTEND=noninteractive" (http://snowulf.com/2008/12/04/truly-non-interactive-unattended-apt-get-install/)
 #
-FROM base
+FROM ubuntu:14.04
 MAINTAINER Richard Millet "richard.millet@berkeley.edu"
 
 #
