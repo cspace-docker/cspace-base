@@ -11,6 +11,8 @@ echo $CSPACE_USER_PASSWORD$'\n'$CSPACE_USER_PASSWORD$'\n' | passwd $CSPACE_USERN
 #
 apt-get install -y git
 cd $USER_HOME/$CSPACE_USERNAME && mkdir src
+cd $USER_HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/application.git
+cd $USER_HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/services.git
 cd $USER_HOME/$CSPACE_USERNAME/src && git clone https://github.com/collectionspace/ui.git
 chown -R $CSPACE_USERNAME $USER_HOME/$CSPACE_USERNAME
 
