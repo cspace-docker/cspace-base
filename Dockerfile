@@ -12,29 +12,35 @@ RUN chmod ug+x install-tool-dependencies.sh
 RUN ./install-tool-dependencies.sh
 
 #
-# Add a bash script that we'll use to set environment variables in the /etc/environment system file.
+# Add a bash script that we'll later use to set environment variables
+# in the /etc/environment system file.
 #
 ADD add-env-vars.sh add-env-vars.sh
 RUN chmod ug+x add-env-vars.sh
 
 #
-# Create a Linux user account named 'cspace'
+# Set environment variables for later creating a Linux user account
+# named 'cspace'.
 #
 ENV USER_HOME /home
 ENV CSPACE_USERNAME cspace
 ENV CSPACE_USER_PASSWORD cspace
 
 #
-# Setup the Tools' environment variables.
+# Set up environment variables for tools.
 #
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 ENV MAVEN_OPTS -Xmx768m -XX:MaxPermSize=512m
 ENV ANT_OPTS -Xmx768m -XX:MaxPermSize=512m
-RUN ./add-env-vars.sh USER_HOME CSPACE_USERNAME JAVA_HOME MAVEN_OPTS ANT_OPTS
-
 
 #
-# Create a directory for the CollectionSpace Sources and download them
+# Add these environment variables to /etc/environment
+#
+RUN ./add-env-vars.sh USER_HOME CSPACE_USERNAME JAVA_HOME MAVEN_OPTS ANT_OPTS
+
+#
+# Add and run a bash script to set up a directory for
+# CollectionSpace source code and download that source code.
 #
 ADD git-cspace-src.sh git-cspace-src.sh
 RUN chmod ug+x git-cspace-src.sh
