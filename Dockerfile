@@ -1,5 +1,18 @@
 #
-# Notes: "DEBIAN_FRONTEND=noninteractive" (http://snowulf.com/2008/12/04/truly-non-interactive-unattended-apt-get-install/)
+# cspace-base Dockerfile
+#
+# Dockerfile 1 of 3 to install and configure a CollectionSpace
+# server instance inside a Docker container.
+#
+
+#
+# Notes re non-interactive package installation, if needed:
+# http://snowulf.com/2008/12/04/truly-non-interactive-unattended-apt-get-install/
+#
+
+#
+# Start with an Ubuntu Linux 14.04 LTS image, downloadable
+# from the Docker Hub registry.
 #
 FROM ubuntu:14.04
 MAINTAINER Richard Millet "richard.millet@berkeley.edu"
@@ -12,30 +25,29 @@ RUN chmod ug+x install-tool-dependencies.sh
 RUN ./install-tool-dependencies.sh
 
 #
-# Add a bash script that we'll later use to set environment variables
-# in the /etc/environment system file.
-#
-ADD add-env-vars.sh add-env-vars.sh
-RUN chmod ug+x add-env-vars.sh
-
-#
-# Set environment variables for later creating a Linux user account
-# named 'cspace'.
+# Set environment variables for later creating a Linux user
+# account named 'cspace'.
 #
 ENV USER_HOME /home
 ENV CSPACE_USERNAME cspace
+# TODO: Investigate how to generate a per-instance password
+# for this user account.
 ENV CSPACE_USER_PASSWORD cspace
 
 #
-# Set up environment variables for tools.
+# Set up environment variables needed by Java and
+# Java-based build tools (Ant and Maven).
 #
 ENV JAVA_HOME /usr/lib/jvm/java-7-oracle
 ENV MAVEN_OPTS -Xmx768m -XX:MaxPermSize=512m
 ENV ANT_OPTS -Xmx768m -XX:MaxPermSize=512m
 
 #
-# Add these environment variables to /etc/environment
+# Add and run a bash script to add these environment variables
+# to the /etc/environment system file.
 #
+ADD add-env-vars.sh add-env-vars.sh
+RUN chmod ug+x add-env-vars.sh
 RUN ./add-env-vars.sh USER_HOME CSPACE_USERNAME JAVA_HOME MAVEN_OPTS ANT_OPTS
 
 #
