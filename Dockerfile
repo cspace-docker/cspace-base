@@ -4,7 +4,9 @@
 # Dockerfile 1 of 3 to install and configure a CollectionSpace
 # server instance inside a Docker container.
 #
-
+# This Dockerfile is specific to and requires Ubuntu Linux,
+# although most of its instructions should likely work with
+# any recent Debian-based Linux distribution.
 #
 # Notes re non-interactive package installation, if needed:
 # http://snowulf.com/2008/12/04/truly-non-interactive-unattended-apt-get-install/
