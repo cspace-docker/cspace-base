@@ -19,12 +19,14 @@
 FROM ubuntu:14.04
 MAINTAINER Richard Millet "richard.millet@berkeley.edu"
 
+ENV SCRIPT_INSTALL_DIR /usr/local/docker-scripts
+
 #
 # Install the Oracle JDK and a set of other tools we'll need.
 #
-ADD install-tool-dependencies.sh install-tool-dependencies.sh
+ADD install-tool-dependencies.sh $SCRIPT_INSTALL_DIR/install-tool-dependencies.sh
 RUN chmod ug+x install-tool-dependencies.sh
-RUN ./install-tool-dependencies.sh
+RUN $SCRIPT_INSTALL_DIR/install-tool-dependencies.sh
 
 #
 # Set environment variables for later creating a Linux user
@@ -48,15 +50,15 @@ ENV ANT_OPTS -Xmx768m -XX:MaxPermSize=512m
 # Add and run a bash script to add these environment variables
 # to the /etc/environment system file.
 #
-ADD add-env-vars.sh add-env-vars.sh
+ADD add-env-vars.sh $SCRIPT_INSTALL_DIR/add-env-vars.sh
 RUN chmod ug+x add-env-vars.sh
-RUN ./add-env-vars.sh USER_HOME CSPACE_USERNAME JAVA_HOME MAVEN_OPTS ANT_OPTS
+RUN $SCRIPT_INSTALL_DIR/add-env-vars.sh USER_HOME CSPACE_USERNAME JAVA_HOME MAVEN_OPTS ANT_OPTS
 
 #
 # Add and run a bash script to set up a directory for
 # CollectionSpace source code and download that source code.
 #
-ADD git-cspace-src.sh git-cspace-src.sh
+ADD git-cspace-src.sh $SCRIPT_INSTALL_DIR/git-cspace-src.sh
 RUN chmod ug+x git-cspace-src.sh
-RUN ./git-cspace-src.sh
+RUN $SCRIPT_INSTALL_DIR/git-cspace-src.sh
 
