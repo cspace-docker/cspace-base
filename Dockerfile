@@ -51,7 +51,7 @@ ENV ANT_OPTS -Xmx768m -XX:MaxPermSize=512m
 # to the /etc/environment system file.
 #
 ADD add-env-vars.sh $SCRIPT_INSTALL_DIR/add-env-vars.sh
-RUN chmod ug+x add-env-vars.sh
+RUN chmod ug+x $SCRIPT_INSTALL_DIR/add-env-vars.sh
 RUN $SCRIPT_INSTALL_DIR/add-env-vars.sh USER_HOME CSPACE_USERNAME JAVA_HOME MAVEN_OPTS ANT_OPTS
 
 #
@@ -59,6 +59,6 @@ RUN $SCRIPT_INSTALL_DIR/add-env-vars.sh USER_HOME CSPACE_USERNAME JAVA_HOME MAVE
 # CollectionSpace source code and download that source code.
 #
 ADD git-cspace-src.sh $SCRIPT_INSTALL_DIR/git-cspace-src.sh
-RUN chmod ug+x git-cspace-src.sh
+RUN chmod ug+x $SCRIPT_INSTALL_DIR/git-cspace-src.sh
 RUN $SCRIPT_INSTALL_DIR/git-cspace-src.sh
 
