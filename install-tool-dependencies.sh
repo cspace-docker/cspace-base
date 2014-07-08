@@ -1,11 +1,6 @@
 #!/bin/bash
 
 #
-# Install wget
-#
-apt-get install -y wget
-
-#
 # Install Oracle/Sun JDK 7
 #
 apt-get install -y software-properties-common
@@ -16,6 +11,11 @@ apt-get -y install oracle-jdk7-installer
 update-alternatives --display java
 # Set Oracle JDK 7 as the system's default Java
 apt-get install oracle-java7-set-default
+
+#
+# Install wget
+#
+apt-get install -y wget
 
 #
 # Install Maven and Ant
