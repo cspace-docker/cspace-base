@@ -25,7 +25,7 @@ ENV SCRIPT_INSTALL_DIR /usr/local/docker-scripts
 # Install the Oracle JDK and a set of other tools we'll need.
 #
 ADD install-tool-dependencies.sh $SCRIPT_INSTALL_DIR/install-tool-dependencies.sh
-RUN chmod ug+x install-tool-dependencies.sh
+RUN chmod ug+x $SCRIPT_INSTALL_DIR/install-tool-dependencies.sh
 RUN $SCRIPT_INSTALL_DIR/install-tool-dependencies.sh
 
 #
